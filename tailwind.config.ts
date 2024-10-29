@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "cod-gray": "#131313",
       },
       inset: {
         "50vh": "50vh",
