@@ -8,6 +8,11 @@ import { useRef } from "react";
 import { useControls, folder } from "leva";
 
 export default function Wave() {
+  const shaderRef = useRef(null);
+  const planeRef = useRef(null);
+
+  useFrame((_, delta) => animate && (shaderRef.current.uTime += delta));
+
   const {
     animate,
     bigWavesElevation,
@@ -24,8 +29,8 @@ export default function Wave() {
   } = useControls({
     animate: true,
     bigWaves: folder({
-      bigWavesElevation: 0.028,
-      bigWavesFrequency: [4, 1.5],
+      bigWavesElevation: { value: 0.028, step: 0.001 },
+      bigWavesFrequency: { value: { x: 4.0, y: 1.5 }, joystick: false },
       bigWavesSpeed: 0.75,
     }),
     smallWaves: folder({
@@ -35,16 +40,20 @@ export default function Wave() {
       smallWavesIteration: 3,
     }),
     colors: folder({
-      surfaceColor: "#9bd8ff",
-      depthColor: "#186691",
+      surfaceColor: "#82bce0",
+      depthColor: "#0f425e",
       colorOffset: 0.25,
       colorMultiplier: 2,
     }),
   });
-  const shaderRef = useRef(null);
-  useFrame((_, delta) => animate && (shaderRef.current.uTime += delta));
+
   return (
-    <Plane args={[2, 2, 1024, 1024]} receiveShadow rotation-x={-Math.PI / 2}>
+    <Plane
+      args={[2, 2, 1024, 1024]}
+      receiveShadow
+      rotation-x={-Math.PI / 2}
+      ref={planeRef}
+    >
       <waveMaterial
         key={WaveMaterial.key}
         ref={shaderRef}
