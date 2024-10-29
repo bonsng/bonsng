@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from "react";
-import { element } from "prop-types";
 
 const thresholds: Array<number> = [];
 for (let i = 0; i < 1.0; i += 0.0001) {
