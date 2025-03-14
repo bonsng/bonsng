@@ -6,7 +6,6 @@ import Nav from "@/ui/nav/Nav";
 import MainPageHtml from "@/ui/MainPage/Html/MainPageHtml";
 import Layer from "@/ui/MainPage/Html/Layer";
 import Logo from "@/ui/nav/Logo";
-import PaletteIcon from "@/public/svgs/palette.svg";
 import ColorPicker from "@/ui/components/color-picker/ColorPicker";
 import MainPage3D from "@/ui/MainPage/3D/MainPage3D";
 import { ColorsProvider } from "@/ui/components/color-picker/colors.provider";
@@ -28,7 +27,7 @@ export default function Home() {
           <Nav />
           <Logo />
           <Layer />
-          <ColorPicker icon={<PaletteIcon />} />
+          <ColorPicker />
           <MainPageHtml />
           {isMounted && <SplashScreen />}
         </ColorsProvider>

@@ -1,15 +1,14 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
 interface ButtonProps {
-  icon: ReactNode;
   openColorPicker: boolean;
   setOpenColorPicker: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Button = (props: ButtonProps) => {
-  const { icon, openColorPicker, setOpenColorPicker } = props;
+  const { openColorPicker, setOpenColorPicker } = props;
 
   return (
     <motion.button

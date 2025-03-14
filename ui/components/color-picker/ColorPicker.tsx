@@ -5,12 +5,7 @@ import ColorBox from "@/ui/components/color-picker/ColorBox";
 import { AnimatePresence, motion } from "framer-motion";
 import ColorView from "@/ui/components/color-picker/ColorView";
 
-interface PColorPicker {
-  icon: React.ReactNode;
-}
-
-const ColorPicker = (props: PColorPicker) => {
-  const { icon } = props;
+const ColorPicker = () => {
   const [openColorPicker, setOpenColorPicker] = useState<boolean>(false);
   const pickerRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +26,6 @@ const ColorPicker = (props: PColorPicker) => {
   return (
     <div ref={pickerRef} className="fixed top-3 right-3 z-50">
       <Button
-        icon={icon}
         openColorPicker={openColorPicker}
         setOpenColorPicker={setOpenColorPicker}
       />
