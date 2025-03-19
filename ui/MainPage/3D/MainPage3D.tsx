@@ -21,9 +21,10 @@ export default function MainPage3D() {
   }, []);
 
   return (
-    <div className="fixed h-screen w-full ">
+    <div className="fixed h-screen w-full">
       <div className="h-full w-full" id={"wrapper-3d"}>
         <Leva hidden={isDebugMode} />
+
         <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0.5, 0] }}>
           <Experience />
         </Canvas>

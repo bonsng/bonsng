@@ -7,6 +7,7 @@ import fragment from "./shaders/fragment.glsl";
 import { useRef } from "react";
 import { useControls, folder } from "leva";
 import { useColorsState } from "@/ui/components/color-picker/colors.provider";
+import { depthColors } from "@/ui/data/colors";
 
 export const WaveMaterial = shaderMaterial(
   {
@@ -34,7 +35,6 @@ extend({ WaveMaterial });
 
 export default function Wave() {
   const { state } = useColorsState();
-  console.log(state);
   const shaderRef = useRef<any>(null);
   const planeRef = useRef(null);
 
@@ -71,7 +71,7 @@ export default function Wave() {
     }),
     colors: folder({
       surfaceColor: `${state.currentColor}`,
-      depthColor: "#0f425e",
+      depthColor: `${depthColors[state.currentColor]}`,
       colorOffset: 0.25,
       colorMultiplier: 2,
     }),
@@ -95,7 +95,7 @@ export default function Wave() {
         uSmallWavesSpeed={smallWavesSpeed}
         uSmallWavesIteration={smallWavesIteration}
         uSurfaceColor={state.currentColor}
-        uDepthColor={depthColor}
+        uDepthColor={depthColors[state.currentColor]}
         uColorOffset={colorOffset}
         uColorMultiplier={colorMultiplier}
       />

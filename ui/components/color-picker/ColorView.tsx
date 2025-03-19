@@ -1,19 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Hex from "@/ui/components/color-picker/Hex";
 import { useColorsState } from "@/ui/components/color-picker/colors.provider";
-
-const colors = [
-  "#82bce0",
-  "#FFFFFF",
-  "#000000",
-  "#5cc86b",
-  "#5c6ec8",
-  "#457b9c",
-  "#f4e792",
-  "#5a3280",
-  "#2d64c5",
-  "#7a564b",
-];
+import { colors } from "@/ui/data/colors";
 
 const ColorView = () => {
   // const [selectedColor, setSelectedColor] = useState("#FFFFFF");
@@ -22,9 +10,9 @@ const ColorView = () => {
   return (
     <>
       <div className="flex gap-3 flex-wrap justify-center my-4">
-        {colors.map((color) => (
+        {colors.map((color, idx) => (
           <button
-            key={color}
+            key={idx}
             // onClick={() => setSelectedColor(color)}
             onClick={() => dispatch({ type: "SET_COLOR", payload: color })}
             className="flex justify-center items-center hover:cursor-pointer"
