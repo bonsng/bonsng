@@ -6,7 +6,6 @@ import Nav from "@/ui/nav/nav";
 import Logo from "@/ui/nav/logo";
 import Layer from "@/ui/main-page/layer";
 import ColorPicker from "@/ui/components/color-picker/color-picker";
-import MainPageHtml from "@/ui/main-page/main-page-html";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(true);
@@ -24,7 +23,6 @@ export default function Home() {
       <Logo />
       <Layer />
       <ColorPicker />
-      <MainPageHtml />
       {isMounted && <SplashScreen />}
     </>
   );

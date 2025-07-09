@@ -10,13 +10,7 @@ export default function Logo() {
   };
   return (
     <>
-      <header className="fixed top-0 h-0 w-full z-50 ">
-        {/*<div*/}
-        {/*  className="absolute z-[11] left-8 top-8 font-oswald text-white font-thin text-4xl hover:cursor-pointer"*/}
-        {/*  onClick={goHome}*/}
-        {/*>*/}
-        {/*  Bonseung Koo*/}
-        {/*</div>*/}
+      <header className="fixed top-0 h-0 w-full z-50">
         <AnimatePresence mode="wait">
           {state.pageNumber !== 0 ? (
             <SmallLogo handleClick={goHome} />
@@ -37,7 +31,7 @@ const SmallLogo = ({ handleClick }: { handleClick: () => void }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: 1 }}
-      className="absolute z-[50] left-8 top-8 font-oswald text-white font-thin text-4xl hover:cursor-pointer"
+      className="absolute lg:left-4 lg:top-2 left-3 top-1 text-3xl font-oswald text-white font-thin lg:text-4xl hover:cursor-pointer"
       onClick={handleClick}
     >
       Bonsng
@@ -53,7 +47,7 @@ const BigLogo = ({ handleClick }: { handleClick: () => void }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="absolute z-[50] lg:left-32 top-24 left-12  font-oswald text-white font-[1] lg:text-9xl text-6xl hover:cursor-pointer"
+      className="absolute lg:left-32 top-24 left-12 font-oswald text-white font-[1] lg:text-9xl text-6xl hover:cursor-pointer"
       onClick={handleClick}
     >
       Bonseung

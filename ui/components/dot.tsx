@@ -14,7 +14,7 @@ const Dot: React.FC<PDot> = ({ index, content }) => {
   return (
     <div
       className={clsx(
-        "relative w-2 h-2 rounded-2xl my-3 transition-colors cursor-pointer text-white flex justify-end items-center duration-300",
+        "relative w-2 h-2 rounded-2xl text-sm lg:text-base my-3 transition-colors cursor-pointer text-white flex justify-end items-center duration-300",
         {
           "bg-white": selected, // 선택된 경우 하얀색
           "bg-transparent hover:text-gray-500": !selected, // 기본 회색, 호버 시 하얀색
@@ -40,7 +40,7 @@ type TDots = {
 
 export const Dots: React.FC<TDots> = ({ contents }) => {
   return (
-    <div className="fixed top-0 right-12 h-full z-50">
+    <div className="fixed top-0 right-6 lg:right-12 h-full z-50" id="nav-dots">
       <div className="fixed flex flex-col h-full items-center justify-center">
         {contents.map((v, idx) => (
           <Dot key={idx} index={idx} content={v}></Dot>

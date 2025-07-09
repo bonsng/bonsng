@@ -13,7 +13,7 @@ const MainPageHtml = () => {
   const PageComponent = components[state.pageNumber];
 
   return (
-    <div className="w-full h-screen flex justify-center items-center overflow-hidden">
+    <div className="w-full h-full flex justify-center items-center overflow-y-auto z-0">
       <AnimatePresence mode="wait">
         <motion.div
           key={state.pageNumber}
@@ -23,7 +23,9 @@ const MainPageHtml = () => {
           transition={{ duration: 0.5 }}
           className="w-full h-full z-30 pt-20 pb-6 px-4"
         >
-          <PageComponent />
+          <div className="relative top-0 w-full bg-no-repeat bg-cover bg-center overflow-y-auto">
+            <PageComponent />
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>

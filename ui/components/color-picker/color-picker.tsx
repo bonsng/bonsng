@@ -24,7 +24,7 @@ const ColorPicker = () => {
   }, []);
 
   return (
-    <div ref={pickerRef} className="fixed top-3 right-3 z-50">
+    <div ref={pickerRef} className="fixed top-1 right-1 lg:top-2 z-50">
       <Button
         openColorPicker={openColorPicker}
         setOpenColorPicker={setOpenColorPicker}

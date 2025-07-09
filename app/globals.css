@@ -64,5 +64,6 @@ body,
   background-color: #131313;
 
   height: 100%;
+  overflow: hidden;
   margin: 0;
 }

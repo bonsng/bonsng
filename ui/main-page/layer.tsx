@@ -1,5 +1,6 @@
 import { usePageNumberState } from "@/ui/context/page-number.provider";
 import clsx from "clsx";
+import MainPageHtml from "@/ui/main-page/main-page-html";
 
 const Layer = () => {
   const { state } = usePageNumberState();
@@ -17,12 +18,13 @@ const Layer = () => {
 
       {/* 네모 윤곽선 애니메이션 div */}
       {state.pageNumber > 0 && (
-        <div className="absolute left-[1%] top-[2%] w-[98%] h-[96%] z-20 flex items-center justify-center">
+        <div className="absolute top-[2%] w-full h-[92%] z-20 flex items-center justify-center mt-9 lg:mt-10">
           {/* 테두리 4개 - div로 구현 */}
-          <div className="absolute top-0 left-0 animate-borderX lg:h-[0.1px]  h-[1px] bg-white origin-left" />
-          <div className="absolute top-0 right-0 lg:w-[0.1px] w-[1px] animate-borderY bg-white origin-top" />
-          <div className="absolute bottom-0 right-0 animate-borderX lg:h-[0.1px] h-[1px] bg-white origin-right" />
-          <div className="absolute bottom-0 left-0 lg:w-[0.1px] w-[1px] animate-borderY bg-white origin-bottom" />
+          <div className="absolute top-0 left-0 animate-borderX lg:h-[0.1px] h-[1px] bg-white origin-left" />
+          {/*<div className="absolute top-0 right-0 lg:w-[0.1px] w-[1px] animate-borderY bg-white origin-top" />*/}
+          {/*<div className="absolute bottom-0 right-0 animate-borderX lg:h-[0.1px] h-[1px] bg-white origin-right" />*/}
+          {/*<div className="absolute bottom-0 left-0 lg:w-[0.1px] w-[1px] animate-borderY bg-white origin-bottom" />*/}
+          <MainPageHtml />
         </div>
       )}
     </>
