@@ -4,7 +4,7 @@ import React from "react";
 import Providers from "@/ui/providers";
 
 export const metadata: Metadata = {
-  title: "Bonseung Koo ✋",
+  title: "Bonseung Koo",
   description: "Bonseung Koo Portfolio",
   icons: {
     icon: "/favicon.ico",
