@@ -1,7 +1,1 @@
-export const contents: string[] = [
-  "Home",
-  "About",
-  "Projects",
-  "Skills",
-  "Contact",
-];
+export const contents: string[] = ["Home", "About", "Projects", "Contact"];

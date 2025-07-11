@@ -3,10 +3,9 @@ import { usePageNumberState } from "@/ui/context/page-number.provider";
 import Home from "@/ui/main-page/contents/home";
 import About from "@/ui/main-page/contents/About";
 import Projects from "@/ui/main-page/contents/Projects";
-import Skills from "@/ui/main-page/contents/Skills";
 import Contact from "@/ui/main-page/contents/Contact";
 
-const components = [Home, About, Projects, Skills, Contact];
+const components = [Home, About, Projects, Contact];
 
 const MainPageHtml = () => {
   const { state } = usePageNumberState();
