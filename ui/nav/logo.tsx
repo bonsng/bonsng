@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageNumberState } from "@/ui/context/page-number.provider";
+import HomeContent from "@/ui/main-page/contents/home";
 
 export default function Logo() {
   const { state, dispatch } = usePageNumberState();
@@ -15,7 +16,10 @@ export default function Logo() {
           {state.pageNumber !== 0 ? (
             <SmallLogo handleClick={goHome} />
           ) : (
-            <BigLogo handleClick={goHome} />
+            <>
+              <BigLogo handleClick={goHome} />
+              <HomeContent />
+            </>
           )}
         </AnimatePresence>
       </header>

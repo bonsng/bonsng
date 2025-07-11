@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageNumberState } from "@/ui/context/page-number.provider";
-import Home from "@/ui/main-page/contents/home";
+import HomeContent from "@/ui/main-page/contents/home";
 import About from "@/ui/main-page/contents/About";
 import Projects from "@/ui/main-page/contents/Projects";
 import Contact from "@/ui/main-page/contents/Contact";
 
-const components = [Home, About, Projects, Contact];
+const components = [HomeContent, About, Projects, Contact];
 
 const MainPageHtml = () => {
   const { state } = usePageNumberState();
