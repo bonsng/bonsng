@@ -30,7 +30,7 @@ export default function Home() {
 
 const SplashScreen = () => {
   return (
-    <div className="fixed top-0 left-0 h-screen w-screen bg-black text-white flex justify-center items-center animate-splashThird text-2xl pb-12">
+    <div className="fixed top-0 left-0 h-screen w-screen bg-black text-white z-[100] flex justify-center items-center animate-splashThird text-2xl pb-12">
       <div className="mr-3 font-semibold animate-splashFirst">Bonseung Koo</div>
       <div className="font-thin animate-splashSecond">Portfolio</div>
     </div>
