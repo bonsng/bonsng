@@ -1,6 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 
 import clsx from "clsx";
+import { useModal } from "@/ui/hooks/modal.hook";
+import { useEffect, useState } from "react";
 
 type PImageButton = {
   title: string;
@@ -19,6 +21,18 @@ const ImageButton = ({
   isOdd = true,
   titleFont = "lime",
 }: PImageButton) => {
+  const { openModal, isOpen } = useModal();
+  const [opened, setOpened] = useState(false);
+
+  const handleClick = () => {
+    setOpened(true);
+    openModal({ title });
+  };
+
+  useEffect(() => {
+    if (!isOpen) setOpened(false);
+  }, [isOpen]);
+
   return (
     <>
       <div
@@ -39,12 +53,18 @@ const ImageButton = ({
           </p>
           <p className="lg:text-lg text-sm font-light">{period}</p>
         </div>
-        <div className="relative w-full max-w-xl aspect-video overflow-hidden transition-transform duration-800 group hover:scale-95 hover:cursor-pointer">
+        <div
+          className={clsx(
+            "relative w-full max-w-xl aspect-video overflow-hidden transition-transform duration-800 group hover:scale-95 hover:cursor-pointer",
+            { "translate-x-1/2 pointer-events-none z-50": opened },
+          )}
+          onClick={handleClick}
+        >
           <Image
             src={src}
             alt="RoomOf project preview"
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-130 z-0"
+            className="object-cover transition-transform duration-700 group-hover:scale-130"
           />
         </div>
       </div>
