@@ -4,7 +4,7 @@ import Image from "next/image";
 const Contact = () => {
   return (
     <>
-      <div className="flex w-full text-white pt-14 pl-10 flex-col gap-1">
+      <div className="flex w-full text-white pt-14 pl-10 lg:pl-32 flex-col gap-1">
         <div className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"

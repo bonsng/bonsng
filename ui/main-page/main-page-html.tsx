@@ -20,7 +20,7 @@ const MainPageHtml = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full h-full z-30 pt-20 pb-6 px-4"
+          className="w-full h-full z-30 pt-10 pb-6 px-4"
         >
           <div className="relative top-0 w-full bg-no-repeat bg-cover bg-center overflow-y-auto">
             <PageComponent />
