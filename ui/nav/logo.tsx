@@ -3,9 +3,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageNumberState } from "@/ui/context/page-number.provider";
 import HomeContent from "@/ui/main-page/contents/home";
+import { useModalContext } from "@/ui/modal/modal-context.provider";
 
 export default function Logo() {
   const { state, dispatch } = usePageNumberState();
+  const { state: modalState } = useModalContext();
   const goHome = () => {
     dispatch({ type: "SET_PAGE_NUMBER", payload: 0 });
   };
@@ -14,7 +16,7 @@ export default function Logo() {
       <header className="fixed top-0 h-0 w-full z-50">
         <AnimatePresence mode="wait">
           {state.pageNumber !== 0 ? (
-            <SmallLogo handleClick={goHome} />
+            !modalState.isOpen && <SmallLogo handleClick={goHome} />
           ) : (
             <>
               <BigLogo handleClick={goHome} />
@@ -33,8 +35,8 @@ const SmallLogo = ({ handleClick }: { handleClick: () => void }) => {
       key="smallLogo"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, delay: 1 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
       className="absolute lg:left-4 lg:top-2 left-3 top-1 text-3xl font-oswald text-white font-thin lg:text-4xl hover:cursor-pointer"
       onClick={handleClick}
     >

@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 
+// import { useModal } from "@/ui/hooks/modal.hook";
 import clsx from "clsx";
-import { useModal } from "@/ui/hooks/modal.hook";
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type PImageButton = {
   title: string;
@@ -13,6 +13,18 @@ type PImageButton = {
   isOdd?: boolean;
 };
 
+const links: Record<string, string> = {
+  "3drive": "https://3-drive-mock.vercel.app/",
+  roomof: "https://room-of-rebuild.vercel.app/",
+  bonsng: "/",
+};
+
+const githubLnks: Record<string, string> = {
+  "3drive": "https://github.com/bonsng/3Drive-mock",
+  roomof: "https://github.com/bonsng/RoomOfRebuild",
+  bonsng: "https://github.com/bonsng",
+};
+
 const ImageButton = ({
   title,
   period,
@@ -21,17 +33,10 @@ const ImageButton = ({
   isOdd = true,
   titleFont = "lime",
 }: PImageButton) => {
-  const { openModal, isOpen } = useModal();
-  const [opened, setOpened] = useState(false);
-
-  const handleClick = () => {
-    setOpened(true);
-    openModal({ title });
-  };
-
-  useEffect(() => {
-    if (!isOpen) setOpened(false);
-  }, [isOpen]);
+  // const { openModal } = useModal();
+  // const handleClick = () => {
+  //   openModal({ title });
+  // };
 
   return (
     <>
@@ -57,13 +62,20 @@ const ImageButton = ({
             {description}
           </p>
           <p className="lg:text-lg text-sm font-light">{period}</p>
+          <Link
+            href={githubLnks[title.toLowerCase()]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="lg:text-lg text-sm font-light underline"
+          >
+            Github
+          </Link>
         </div>
-        <div
-          className={clsx(
-            "relative w-full max-w-xl aspect-video overflow-hidden transition-transform duration-800 group hover:scale-95 hover:cursor-pointer",
-            { "translate-x-1/2 pointer-events-none z-50": opened },
-          )}
-          onClick={handleClick}
+        <Link
+          href={links[title.toLowerCase()]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative w-full max-w-xl aspect-video overflow-hidden transition-transform duration-800 group hover:scale-95 hover:cursor-pointer"
         >
           <Image
             src={src}
@@ -71,7 +83,7 @@ const ImageButton = ({
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-130"
           />
-        </div>
+        </Link>
       </div>
     </>
   );

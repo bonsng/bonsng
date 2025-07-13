@@ -1,7 +1,7 @@
 import ImageButton from "@/ui/components/image-button";
 import RoomOfImage from "@/public/project-images/roomof.png";
 import DriveImage from "@/public/project-images/3drive.png";
-import PortfolioImage from "@/public/project-images/portfolio.png";
+import PortfolioImage from "@/public/project-images/bonsng.png";
 
 const Projects = () => {
   return (

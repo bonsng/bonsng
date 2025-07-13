@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { usePageNumberState } from "@/ui/context/page-number.provider";
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type PDot = {
   index: number;
@@ -40,12 +41,21 @@ type TDots = {
 
 export const Dots: React.FC<TDots> = ({ contents }) => {
   return (
-    <div className="fixed top-0 right-6 lg:right-12 h-full z-50" id="nav-dots">
-      <div className="fixed flex flex-col h-full items-center justify-center">
-        {contents.map((v, idx) => (
-          <Dot key={idx} index={idx} content={v}></Dot>
-        ))}
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        className="fixed top-0 right-6 lg:right-12 h-full z-50"
+        id="nav-dots"
+        initial={{ x: 50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: 50, opacity: 0 }}
+        transition={{ duration: 0.4, ease: "easeInOut", delay: 0.2 }}
+      >
+        <div className="fixed flex flex-col h-full items-center justify-center">
+          {contents.map((v, idx) => (
+            <Dot key={idx} index={idx} content={v}></Dot>
+          ))}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
