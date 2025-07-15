@@ -53,7 +53,7 @@ const BigLogo = ({ handleClick }: { handleClick: () => void }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="absolute lg:left-32 top-24 left-12 font-oswald text-white font-[1] lg:text-9xl text-6xl hover:cursor-pointer"
+      className="absolute lg:left-32 top-32 lg:top-24 left-12 font-oswald text-white font-[1] lg:text-9xl text-6xl hover:cursor-pointer"
       onClick={handleClick}
     >
       Bonseung

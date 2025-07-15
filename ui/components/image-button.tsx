@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
 
 // import { useModal } from "@/ui/hooks/modal.hook";
 import clsx from "clsx";
@@ -37,6 +38,8 @@ const ImageButton = ({
   // const handleClick = () => {
   //   openModal({ title });
   // };
+
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
@@ -77,11 +80,18 @@ const ImageButton = ({
           rel="noopener noreferrer"
           className="relative w-full max-w-xl aspect-video overflow-hidden transition-transform duration-800 group hover:scale-95 hover:cursor-pointer"
         >
+          {isLoading && (
+            <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+          )}
           <Image
             src={src}
             alt="RoomOf project preview"
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-130"
+            className={clsx(
+              "object-cover transition-transform duration-700 group-hover:scale-130",
+              { "opacity-0": isLoading },
+            )}
+            onLoadingComplete={() => setIsLoading(false)}
           />
         </Link>
       </div>
