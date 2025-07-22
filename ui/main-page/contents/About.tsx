@@ -18,7 +18,7 @@ const About = () => {
       <ContentWrapper>
         <Title title={"Education"} />
         <p className="text-sm lg:text-lg">중앙대학교 소프트웨어학과</p>
-        <p className="text-xs lg:text-lg">2019.03 ~ 2025.02 (졸업 예정)</p>
+        <p className="text-xs lg:text-lg">2019.03 ~ 2025.08 (졸업 예정)</p>
       </ContentWrapper>
       <ContentWrapper>
         <Title title={"Skills"} />

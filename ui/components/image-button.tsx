@@ -65,14 +65,26 @@ const ImageButton = ({
             {description}
           </p>
           <p className="lg:text-lg text-sm font-light">{period}</p>
-          <Link
-            href={githubLnks[title.toLowerCase()]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="lg:text-lg text-sm font-light underline"
-          >
-            Github
-          </Link>
+          <p className="lg:text-lg text-sm font-light">
+            <Link
+              href={githubLnks[title.toLowerCase()]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Github
+            </Link>
+          </p>
+          <p className="lg:text-lg text-sm font-light">
+            <Link
+              href={links[title.toLowerCase()]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Live Demo
+            </Link>
+          </p>
         </div>
         <Link
           href={links[title.toLowerCase()]}
