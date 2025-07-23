@@ -12,13 +12,13 @@ const Projects = () => {
           period="2025.03-2025.07"
           description="3D기반 클라우드 스토리지 서비스"
           titleFont="notable"
-          isOdd={false}
           src={DriveImage}
         />
         <ImageButton
           title="RoomOf"
           period="2023.09-2023.12"
           description="가상 메모리얼 서비스"
+          isOdd={false}
           src={RoomOfImage}
         />
         <ImageButton
