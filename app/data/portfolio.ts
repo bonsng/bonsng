@@ -10,7 +10,7 @@ export type LocalizedList = {
 
 export const hero = {
   name: "Bonseung Koo",
-  title: "Bonsng Portfolio",
+  title: "Portfolio",
   role: {
     ko: "Frontend Engineer",
     en: "Frontend Engineer",
@@ -115,6 +115,35 @@ export const projects: Project[] = [
     image: "/project-images/roomof.png",
     github: "https://github.com/bonsng/RoomOfRebuild",
     live: "https://room-of-rebuild.vercel.app/",
+  },
+  {
+    title: "Bonsng Ver2",
+    period: "2026.01 - Present",
+    description: {
+      ko: "개인 포트폴리오 리뉴얼",
+      en: "Personal Portfolio Renewal",
+    },
+    details: {
+      ko: [
+        "기존 포트폴리오를 정보 전달력과 인터랙션 완성도 중심으로 리뉴얼한 현재 버전입니다.",
+        "홈 화면을 데스크톱 2분할/모바일 스택 구조로 재설계하고, 3D Hero 영역과 텍스트 영역의 균형을 개선했습니다.",
+        "Projects 섹션에 카드 클릭 기반 상세 모달을 도입해 프로젝트 맥락, 기술 선택, 구현 포인트를 더 깊게 전달하도록 구성했습니다.",
+        "네비게이션에 glass 스타일, 활성 인디케이터, 하단 접근 UX를 적용해 시각적 일관성과 사용 흐름을 강화했습니다.",
+        "다크 모드와 한/영 언어 설정을 추가하고, 쿠키 기반 초기 렌더 동기화로 새로고침 시 깜빡임을 줄였습니다.",
+        "GitHub Actions CI(lint/build) 파이프라인을 도입해 기본 품질 검증을 자동화했습니다.",
+      ],
+      en: [
+        "The current renewed version of my portfolio, focused on stronger information delivery and interaction quality.",
+        "Redesigned the home screen into a desktop split layout and mobile stacked layout, improving balance between 3D hero visuals and textual content.",
+        "Added click-to-open detail modals in Projects so each project can communicate context, technical decisions, and implementation depth more clearly.",
+        "Refined navigation with glass styling, active indicator behavior, and bottom-reveal UX to improve consistency and interaction flow.",
+        "Introduced dark mode and Korean/English settings, with cookie-based initial render sync to minimize refresh flicker.",
+        "Set up a GitHub Actions CI pipeline (lint/build) to automate baseline quality checks.",
+      ],
+    },
+    image: "/project-images/bonsng_ver2.png",
+    github: "https://github.com/bonsng/bonsng",
+    live: "https://bonsng.vercel.app",
   },
   {
     title: "Bonsng Ver1",
