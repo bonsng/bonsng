@@ -1,8 +1,67 @@
 "use client";
 
+import type { IconType } from "react-icons";
+import {
+  SiCss3,
+  SiFramer,
+  SiHtml5,
+  SiJavascript,
+  SiNextdotjs,
+  SiPython,
+  SiReact,
+  SiRedux,
+  SiTailwindcss,
+  SiThreedotjs,
+  SiTypescript,
+} from "react-icons/si";
+import { Braces } from "lucide-react";
 import PageShell from "../components/page-shell";
 import { useSettings } from "../components/settings-context";
 import { education, profile, skills } from "../data/portfolio";
+
+const skillTone = {
+  languages: "from-sky-500/20 via-cyan-500/10 to-transparent",
+  frontend: "from-emerald-500/20 via-lime-400/10 to-transparent",
+} as const;
+
+const skillIcons: Record<string, IconType> = {
+  JavaScript: SiJavascript,
+  TypeScript: SiTypescript,
+  HTML5: SiHtml5,
+  CSS3: SiCss3,
+  Python: SiPython,
+  React: SiReact,
+  "Next.js": SiNextdotjs,
+  "Three.js": SiThreedotjs,
+  Redux: SiRedux,
+  "Tailwind CSS": SiTailwindcss,
+  "Framer Motion": SiFramer,
+};
+
+function SkillGrid({ items, tone }: { items: string[]; tone: string }) {
+  return (
+    <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {items.map((item) => (
+        <div
+          key={item}
+          className={`group rounded-2xl border border-[color:var(--glass-border-strong)] bg-gradient-to-br ${tone} bg-[color:var(--glass-chip-bg)] p-3 transition-transform duration-200 hover:-translate-y-0.5`}
+        >
+          <div className="flex items-center gap-2">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--glass-border-strong)] bg-[color:var(--glass-chip-hover)] text-[11px] font-bold text-[color:var(--ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
+              {(() => {
+                const Icon = skillIcons[item];
+                if (Icon) return <Icon className="h-4 w-4" aria-hidden />;
+                if (item === "Zustand") return <Braces className="h-4 w-4" aria-hidden />;
+                return item.slice(0, 2).toUpperCase();
+              })()}
+            </span>
+            <span className="text-sm font-semibold tracking-wide text-[color:var(--ink)]">{item}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function AboutPage() {
   const { language } = useSettings();
@@ -43,29 +102,11 @@ export default function AboutPage() {
             <h3 className="display-font text-xl text-[color:var(--ink)]">
               {language === "ko" ? "언어" : "Languages"}
             </h3>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {skills.languages.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-[color:var(--glass-border-strong)] bg-[color:var(--glass-chip-bg)] px-3 py-1 text-xs font-semibold text-[color:var(--ink)]"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+            <SkillGrid items={skills.languages} tone={skillTone.languages} />
           </article>
           <article className="glass-panel rounded-3xl p-5">
             <h3 className="display-font text-xl text-[color:var(--ink)]">Frontend</h3>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {skills.frontend.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-[color:var(--glass-border-strong)] bg-[color:var(--glass-chip-bg)] px-3 py-1 text-xs font-semibold text-[color:var(--ink)]"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+            <SkillGrid items={skills.frontend} tone={skillTone.frontend} />
           </article>
         </div>
       </section>

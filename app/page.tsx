@@ -3,7 +3,7 @@
 import Link from "next/link";
 import HeroCanvas from "./components/hero-canvas";
 import PageShell from "./components/page-shell";
-import { education, hero } from "./data/portfolio";
+import { hero } from "./data/portfolio";
 import { useSettings } from "./components/settings-context";
 
 export default function Home() {
@@ -24,9 +24,6 @@ export default function Home() {
           <p className="max-w-xl text-base leading-relaxed text-[color:var(--ink-soft)] sm:text-lg md:max-w-lg">
             {hero.intro[language]}
           </p>
-          <div className="glass-panel w-fit rounded-2xl px-4 py-3 text-sm text-[color:var(--ink-soft)]">
-            {education.school[language]} ({education.period})
-          </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/projects"
