@@ -4,6 +4,7 @@ import { Float, MeshDistortMaterial, OrbitControls, Sparkles } from "@react-thre
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import type { Mesh } from "three";
+import type { Theme } from "./settings-context";
 
 function CenterShape() {
   const shapeRef = useRef<Mesh>(null);
@@ -44,13 +45,19 @@ function OrbitingDot({ position, color }: { position: [number, number, number]; 
   );
 }
 
-export default function HeroCanvas() {
+type HeroCanvasProps = {
+  theme: Theme;
+};
+
+export default function HeroCanvas({ theme }: HeroCanvasProps) {
+  const isDark = theme === "dark";
+
   return (
     <Canvas camera={{ position: [0, 0, 4.3], fov: 48 }} dpr={[1, 1.6]} className="h-full w-full">
-      <color attach="background" args={["#f9f4ea"]} />
-      <ambientLight intensity={0.65} />
-      <directionalLight position={[2, 3, 4]} intensity={1.1} color="#ffffff" />
-      <pointLight position={[-3, -1, 2]} intensity={0.75} color="#4eb4ad" />
+      <color attach="background" args={[isDark ? "#11141d" : "#f9f4ea"]} />
+      <ambientLight intensity={isDark ? 0.55 : 0.65} />
+      <directionalLight position={[2, 3, 4]} intensity={isDark ? 0.95 : 1.1} color="#ffffff" />
+      <pointLight position={[-3, -1, 2]} intensity={isDark ? 0.95 : 0.75} color="#4eb4ad" />
 
       <CenterShape />
       <OrbitingDot position={[-2, 1, -0.4]} color="#0f8b8d" />
@@ -61,8 +68,8 @@ export default function HeroCanvas() {
         scale={5.2}
         size={2}
         speed={0.25}
-        color="#ffffff"
-        opacity={0.5}
+        color={isDark ? "#a0e8ff" : "#ffffff"}
+        opacity={isDark ? 0.35 : 0.5}
       />
 
       <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={0.45} />
