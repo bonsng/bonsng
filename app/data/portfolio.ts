@@ -29,7 +29,7 @@ export const profile: LocalizedText = {
 export const education = {
   school: {
     ko: "중앙대학교 소프트웨어학과",
-    en: "Chung-Ang University, Department of Software",
+    en: "Chung-Ang University, Computer Science and Engineering",
   } satisfies LocalizedText,
   period: "2019.03 ~ 2025.08 (졸업)",
 };

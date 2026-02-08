@@ -38,27 +38,49 @@ const skillIcons: Record<string, IconType> = {
   "Framer Motion": SiFramer,
 };
 
+const skillLinks: Record<string, string> = {
+  JavaScript: "https://developer.mozilla.org/docs/Web/JavaScript",
+  TypeScript: "https://www.typescriptlang.org/",
+  HTML5: "https://developer.mozilla.org/docs/Web/HTML",
+  CSS3: "https://developer.mozilla.org/docs/Web/CSS",
+  Python: "https://www.python.org/",
+  React: "https://react.dev/",
+  "Next.js": "https://nextjs.org/",
+  "Three.js": "https://threejs.org/",
+  Redux: "https://redux.js.org/",
+  "Tailwind CSS": "https://tailwindcss.com/",
+  "Framer Motion": "https://motion.dev/",
+  Zustand: "https://zustand.docs.pmnd.rs/",
+};
+
 function SkillGrid({ items, tone }: { items: string[]; tone: string }) {
   return (
     <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {items.map((item) => (
-        <div
-          key={item}
-          className={`group rounded-2xl border border-[color:var(--glass-border-strong)] bg-gradient-to-br ${tone} bg-[color:var(--glass-chip-bg)] p-3 transition-transform duration-200 hover:-translate-y-0.5`}
-        >
-          <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--glass-border-strong)] bg-[color:var(--glass-chip-hover)] text-[11px] font-bold text-[color:var(--ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
-              {(() => {
-                const Icon = skillIcons[item];
-                if (Icon) return <Icon className="h-4 w-4" aria-hidden />;
-                if (item === "Zustand") return <Braces className="h-4 w-4" aria-hidden />;
-                return item.slice(0, 2).toUpperCase();
-              })()}
-            </span>
-            <span className="text-sm font-semibold tracking-wide text-[color:var(--ink)]">{item}</span>
-          </div>
-        </div>
-      ))}
+      {items.map((item) => {
+        const href = skillLinks[item];
+
+        return (
+          <a
+            key={item}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`group rounded-2xl border border-[color:var(--glass-border-strong)] bg-gradient-to-br ${tone} bg-[color:var(--glass-chip-bg)] p-3 transition-transform duration-200 hover:-translate-y-0.5`}
+          >
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--glass-border-strong)] bg-[color:var(--glass-chip-hover)] text-[11px] font-bold text-[color:var(--ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
+                {(() => {
+                  const Icon = skillIcons[item];
+                  if (Icon) return <Icon className="h-4 w-4" aria-hidden />;
+                  if (item === "Zustand") return <Braces className="h-4 w-4" aria-hidden />;
+                  return item.slice(0, 2).toUpperCase();
+                })()}
+              </span>
+              <span className="text-sm font-semibold tracking-wide text-[color:var(--ink)]">{item}</span>
+            </div>
+          </a>
+        );
+      })}
     </div>
   );
 }

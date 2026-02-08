@@ -72,7 +72,7 @@ export default function HeroCanvas({ theme }: HeroCanvasProps) {
         opacity={isDark ? 0.35 : 0.5}
       />
 
-      <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={0.45} />
+      <OrbitControls enablePan={false} enableZoom autoRotate autoRotateSpeed={0.45} />
     </Canvas>
   );
 }
