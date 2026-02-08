@@ -39,14 +39,23 @@ jobs:
             const executionFile = '${{ steps.claude-review.outputs.execution_file }}';
             const fullOutput = fs.readFileSync(executionFile, 'utf8');
 
-            const finalResultMatch = fullOutput.match(/## ✅ Final Result\n\n([\s\S]*?)(?:\*\*Cost:|\n---\n|$)/);
-            const reviewResult = finalResultMatch ? finalResultMatch[1].trim() : fullOutput;
+            let reviewResult;
+            try {
+              // JSON 형식 파싱 시도
+              const jsonData = JSON.parse(fullOutput);
+              const resultObj = jsonData.find(item => item.type === 'result');
+              reviewResult = resultObj?.result || fullOutput;
+            } catch {
+              // JSON이 아니면 정규식으로 추출
+              const finalResultMatch = fullOutput.match(/## ✅ Final Result\n\n([\s\S]*?)(?:\*\*Cost:|\n---\n|$)/);
+              reviewResult = finalResultMatch ? finalResultMatch[1].trim() : fullOutput;
+            }
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🤖 Claude Code Review\n\n> 💡 참고: AI 리뷰는 보조 도구입니다. 최종 판단은 팀원이 해주세요.\n\n<details>\n<summary>📋 리뷰 결과 보기 (클릭)</summary>\n\n${reviewResult}\n\n</details>`
+              body: `## 🤖 Claude Frontend Review\n\n> 💡 참고: AI 리뷰는 보조 도구입니다. 최종 판단은 팀원이 해주세요.\n\n<details>\n<summary>📋 리뷰 결과 보기 (클릭)</summary>\n\n${reviewResult}\n\n</details>`
             });
 
   claude-comment:
