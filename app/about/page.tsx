@@ -14,7 +14,7 @@ import {
   SiThreedotjs,
   SiTypescript,
 } from "react-icons/si";
-import { Braces } from "lucide-react";
+import { Braces, ExternalLink } from "lucide-react";
 import PageShell from "../components/page-shell";
 import { useSettings } from "../components/settings-context";
 import { education, profile, skills } from "../data/portfolio";
@@ -65,8 +65,11 @@ function SkillGrid({ items, tone }: { items: string[]; tone: string }) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`group rounded-2xl border border-[color:var(--glass-border-strong)] bg-gradient-to-br ${tone} bg-[color:var(--glass-chip-bg)] p-3 transition-transform duration-200 hover:-translate-y-0.5`}
+            className={`group relative rounded-2xl border border-[color:var(--glass-border-strong)] bg-gradient-to-br ${tone} bg-[color:var(--glass-chip-bg)] p-3 transition-transform duration-200 hover:-translate-y-0.5`}
           >
+            <span className="pointer-events-none absolute right-2 top-2 text-[color:var(--ink-soft)] opacity-0 transition-opacity duration-200 group-hover:opacity-100" aria-hidden>
+              <ExternalLink className="h-3.5 w-3.5" />
+            </span>
             <div className="flex items-center gap-2">
               <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[color:var(--glass-border-strong)] bg-[color:var(--glass-chip-hover)] text-[11px] font-bold text-[color:var(--ink)] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
                 {(() => {
