@@ -91,7 +91,7 @@ export default function AboutPage() {
   return (
     <PageShell>
       <section className="mx-auto max-w-6xl">
-        <h1 className="display-font text-4xl text-[color:var(--ink)] sm:text-5xl">
+        <h1 className="display-font text-5xl text-[color:var(--ink)] sm:text-6xl">
           {language === "ko" ? "소개" : "About"}
         </h1>
         <div className="mt-6 grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
