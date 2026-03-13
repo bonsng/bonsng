@@ -1,13 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useRef } from "react";
 import HeroCanvas from "./components/hero-canvas";
 import PageShell from "./components/page-shell";
 import { hero } from "./data/portfolio";
 import { useSettings } from "./components/settings-context";
 
+const CLICK_THRESHOLD = 6;
+
 export default function Home() {
   const { language, theme } = useSettings();
+  const router = useRouter();
+  const pointerStart = useRef<{ x: number; y: number } | null>(null);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    pointerStart.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  const onPointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      if (!pointerStart.current) return;
+      const dx = e.clientX - pointerStart.current.x;
+      const dy = e.clientY - pointerStart.current.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      pointerStart.current = null;
+
+      if (distance < CLICK_THRESHOLD) {
+        router.push("/explore");
+      }
+    },
+    [router],
+  );
 
   return (
     <PageShell fullBleed>
@@ -41,10 +66,15 @@ export default function Home() {
         </div>
 
         <div className="hero-reveal-delay h-full p-4 pt-2 md:py-8 md:pl-0 md:pr-14 lg:pr-20">
-          <div className="glass-panel relative h-full w-full overflow-hidden rounded-[2rem]">
+          <div
+            className="glass-panel relative h-full w-full cursor-pointer overflow-hidden rounded-[2rem] transition-shadow hover:shadow-[0_18px_50px_rgba(229,93,36,0.18)]"
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+          >
             <HeroCanvas theme={theme} />
-            <div className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/80 px-3 py-1 text-xs font-semibold tracking-wide text-white">
-              React Three Fiber
+            <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold tracking-wide text-white backdrop-blur-sm">
+              <span>{language === "ko" ? "클릭하여 탐색" : "Click to explore"}</span>
+              <span className="inline-block animate-pulse">→</span>
             </div>
           </div>
         </div>
