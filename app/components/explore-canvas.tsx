@@ -1,8 +1,8 @@
 "use client";
 
-import { Html, OrbitControls, Sparkles } from "@react-three/drei";
+import { Environment, Html, OrbitControls, Sparkles } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import * as THREE from "three";
 import CenterShape from "./center-shape";
 import type { Theme } from "./settings-context";
@@ -102,6 +102,7 @@ function ProjectNode({
       <Html
         position={[0, -1.1, 0]}
         center
+        occlude
         distanceFactor={10}
         style={{ pointerEvents: "none", userSelect: "none" }}
       >
@@ -112,6 +113,7 @@ function ProjectNode({
       <Html
         position={[0, -1.5, 0]}
         center
+        occlude
         distanceFactor={10}
         style={{ pointerEvents: "none", userSelect: "none" }}
       >
@@ -121,6 +123,18 @@ function ProjectNode({
       </Html>
     </group>
   );
+}
+
+function NonRaycastableSparkles(props: React.ComponentProps<typeof Sparkles>) {
+  const ref = useRef<THREE.Points>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.raycast = () => {};
+    }
+  }, []);
+
+  return <Sparkles ref={ref} {...props} />;
 }
 
 function Scene({ onSelectProject }: { onSelectProject: (project: Project) => void }) {
@@ -149,16 +163,52 @@ export default function ExploreCanvas({ theme, onSelectProject }: ExploreCanvasP
     <Canvas
       camera={{ position: [0, 5, 12], fov: 50 }}
       dpr={[1, 1.6]}
+      gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }}
       className="h-full w-full"
     >
-      <color attach="background" args={[isDark ? "#11141d" : "#f9f4ea"]} />
-      <ambientLight intensity={isDark ? 0.5 : 0.6} />
-      <directionalLight position={[3, 5, 4]} intensity={isDark ? 0.9 : 1.05} color="#ffffff" />
-      <pointLight position={[-4, -2, 3]} intensity={isDark ? 0.8 : 0.6} color="#4eb4ad" />
+      <color attach="background" args={[isDark ? "#0a0e1a" : "#f9f4ea"]} />
+
+      {/* HDRI 환경맵 — 메탈릭 반사용 (배경에는 표시하지 않음) */}
+      <Environment preset="studio" background={false} environmentIntensity={isDark ? 1.2 : 0.8} />
+
+      {/* 앰비언트: 기본 조명 */}
+      <ambientLight intensity={isDark ? 0.4 : 0.6} />
+
+      {/* 키 라이트: 따뜻한 오렌지/골드, 우측 상단 */}
+      <directionalLight
+        position={[5, 6, 3]}
+        intensity={isDark ? 3.0 : 1.5}
+        color="#ffb066"
+      />
+
+      {/* 필 라이트: 차가운 블루/퍼플, 좌측 하단 */}
+      <directionalLight
+        position={[-4, -1, -3]}
+        intensity={isDark ? 1.2 : 0.6}
+        color="#7b68ee"
+      />
+
+      {/* 림 라이트: 뒤쪽에서 윤곽을 살리는 역광 */}
+      <pointLight
+        position={[0, 2, -6]}
+        intensity={isDark ? 5.0 : 3.0}
+        color="#e0c0ff"
+        distance={20}
+        decay={2}
+      />
+
+      {/* 바닥 반사광: 아래에서 올라오는 청록 포인트 라이트 */}
+      <pointLight
+        position={[0, -4, 0]}
+        intensity={isDark ? 2.5 : 1.0}
+        color="#4eb4ad"
+        distance={15}
+        decay={2}
+      />
 
       <Scene onSelectProject={onSelectProject} />
 
-      <Sparkles
+      <NonRaycastableSparkles
         count={120}
         scale={14}
         size={2}
