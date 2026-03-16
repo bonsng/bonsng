@@ -7,7 +7,7 @@ import OrbitingDot from "./orbiting-dot";
 export default function SceneContent({ isDark }: { isDark: boolean }) {
   return (
     <>
-      <Environment preset="studio" background={false} environmentIntensity={isDark ? 1.2 : 0.8} />
+      <Environment files="/hdri/studio_small_03_1k.hdr" background={false} environmentIntensity={isDark ? 1.2 : 0.8} />
 
       <ambientLight intensity={isDark ? 0.4 : 0.6} />
 
