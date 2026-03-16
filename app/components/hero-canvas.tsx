@@ -1,36 +1,44 @@
 "use client";
 
-import { OrbitControls, Sparkles } from "@react-three/drei";
+import { Environment, OrbitControls, Sparkles } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import * as THREE from "three";
 import CenterShape from "./center-shape";
 import OrbitingDot from "./orbiting-dot";
 import type { Theme } from "./settings-context";
 
 type HeroCanvasProps = {
   theme: Theme;
+  canvasBgColor: string;
 };
 
-export default function HeroCanvas({ theme }: HeroCanvasProps) {
+export default function HeroCanvas({ theme, canvasBgColor }: HeroCanvasProps) {
   const isDark = theme === "dark";
 
   return (
     <Canvas
       camera={{ position: [0, 0, 10], fov: 48 }}
       dpr={[1, 1.6]}
+      gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }}
       className="h-full w-full"
     >
-      <color attach="background" args={[isDark ? "#11141d" : "#f9f4ea"]} />
-      <ambientLight intensity={isDark ? 0.55 : 0.65} />
-      <directionalLight
-        position={[2, 3, 4]}
-        intensity={isDark ? 0.95 : 1.1}
-        color="#ffffff"
-      />
-      <pointLight
-        position={[-3, -1, 2]}
-        intensity={isDark ? 0.95 : 0.75}
-        color="#4eb4ad"
-      />
+      <color attach="background" args={[canvasBgColor]} />
+
+      <Environment preset="studio" background={false} environmentIntensity={isDark ? 1.2 : 0.8} />
+
+      <ambientLight intensity={isDark ? 0.4 : 0.6} />
+
+      {/* 키 라이트: 따뜻한 오렌지/골드, 우측 상단 */}
+      <directionalLight position={[5, 6, 3]} intensity={isDark ? 3.0 : 1.5} color="#ffb066" />
+
+      {/* 필 라이트: 차가운 블루/퍼플, 좌측 하단 */}
+      <directionalLight position={[-4, -1, -3]} intensity={isDark ? 1.2 : 0.6} color="#7b68ee" />
+
+      {/* 림 라이트: 뒤쪽 역광 */}
+      <pointLight position={[0, 2, -6]} intensity={isDark ? 5.0 : 3.0} color="#e0c0ff" distance={20} decay={2} />
+
+      {/* 바닥 반사광: 청록 */}
+      <pointLight position={[0, -4, 0]} intensity={isDark ? 2.5 : 1.0} color="#4eb4ad" distance={15} decay={2} />
 
       <CenterShape />
       <OrbitingDot position={[-2, 1, -0.4]} color="#0f8b8d" />
