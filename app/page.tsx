@@ -2,37 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef } from "react";
 import HeroCanvas from "./components/hero-canvas";
 import PageShell from "./components/page-shell";
 import { hero } from "./data/portfolio";
 import { useSettings } from "./components/settings-context";
 
-const CLICK_THRESHOLD = 6;
-
 export default function Home() {
   const { language, theme, canvasBgColor } = useSettings();
   const router = useRouter();
-  const pointerStart = useRef<{ x: number; y: number } | null>(null);
-
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    pointerStart.current = { x: e.clientX, y: e.clientY };
-  }, []);
-
-  const onPointerUp = useCallback(
-    (e: React.PointerEvent) => {
-      if (!pointerStart.current) return;
-      const dx = e.clientX - pointerStart.current.x;
-      const dy = e.clientY - pointerStart.current.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      pointerStart.current = null;
-
-      if (distance < CLICK_THRESHOLD) {
-        router.push("/explore");
-      }
-    },
-    [router],
-  );
 
   return (
     <PageShell fullBleed>
@@ -65,13 +42,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-reveal-delay h-full p-4 pt-2 md:py-8 md:pl-0 md:pr-14 lg:pr-20">
+        <div className="hero-reveal-delay flex h-full items-center justify-center p-4 pt-2 md:py-8 md:pl-0 md:pr-14 lg:pr-20">
           <div
-            className="glass-panel relative h-full w-full cursor-pointer overflow-hidden rounded-[2rem] transition-shadow hover:shadow-[0_18px_50px_rgba(229,93,36,0.18)]"
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
+            className="relative h-[85%] w-full cursor-pointer will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[0.98] active:scale-[0.96]"
+            onClick={() => router.push("/explore")}
           >
-            <HeroCanvas theme={theme} canvasBgColor={canvasBgColor} />
+            <div className="glass-panel h-full w-full overflow-hidden rounded-[2rem]">
+              <HeroCanvas theme={theme} canvasBgColor={canvasBgColor} />
+            </div>
             <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold tracking-wide text-white backdrop-blur-sm">
               <span>{language === "ko" ? "클릭하여 탐색" : "Click to explore"}</span>
               <span className="inline-block animate-pulse">→</span>

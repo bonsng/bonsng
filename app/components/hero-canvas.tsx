@@ -1,6 +1,6 @@
 "use client";
 
-import { Environment, OrbitControls, Sparkles } from "@react-three/drei";
+import { Environment, Sparkles } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import CenterShape from "./center-shape";
@@ -53,16 +53,6 @@ export default function HeroCanvas({ theme, canvasBgColor }: HeroCanvasProps) {
         opacity={isDark ? 0.35 : 0.5}
       />
 
-      <OrbitControls
-        enablePan={false}
-        enableZoom
-        minDistance={2.8}
-        maxDistance={7.2}
-        enableDamping
-        dampingFactor={0.08}
-        autoRotate
-        autoRotateSpeed={0.45}
-      />
     </Canvas>
   );
 }
