@@ -1,37 +1,42 @@
 "use client";
 
-import { Float, MeshDistortMaterial } from "@react-three/drei";
+import { Float, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import type { Mesh } from "three";
+import { useMemo, useRef } from "react";
+import { Mesh, MeshStandardMaterial } from "three";
+import type { Group } from "three";
 
 export default function CenterShape() {
-  const shapeRef = useRef<Mesh>(null);
+  const groupRef = useRef<Group>(null);
+  const { scene } = useGLTF("/models/bumpy_sphere.glb");
+
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if (child instanceof Mesh && child.material instanceof MeshStandardMaterial) {
+        child.material = child.material.clone();
+        child.material.envMapIntensity = 2.5;
+        child.material.needsUpdate = true;
+      }
+    });
+    return clone;
+  }, [scene]);
 
   useFrame((state, delta) => {
-    if (!shapeRef.current) {
+    if (!groupRef.current) {
       return;
     }
-    shapeRef.current.rotation.x += delta * 0.2;
-    shapeRef.current.rotation.y += delta * 0.35;
-    shapeRef.current.position.y =
+    groupRef.current.rotation.x += delta * 0.2;
+    groupRef.current.rotation.y += delta * 0.35;
+    groupRef.current.position.y =
       Math.sin(state.clock.elapsedTime * 0.7) * 0.08;
   });
 
   return (
     <Float speed={1.4} rotationIntensity={0.8} floatIntensity={0.7}>
-      <mesh ref={shapeRef}>
-        <torusKnotGeometry args={[1, 0.32, 210, 32]} />
-        <MeshDistortMaterial
-          color="#e55d24"
-          emissive="#e55d24"
-          emissiveIntensity={0.18}
-          roughness={0.18}
-          metalness={0.45}
-          distort={0.32}
-          speed={2.2}
-        />
-      </mesh>
+      <primitive ref={groupRef} object={clonedScene} scale={0.5} />
     </Float>
   );
 }
+
+useGLTF.preload("/models/bumpy_sphere.glb");
