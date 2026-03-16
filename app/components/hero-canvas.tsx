@@ -1,7 +1,8 @@
 "use client";
 
-import { Environment, Sparkles } from "@react-three/drei";
+import { Environment, Sparkles, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import CenterShape from "./center-shape";
 import OrbitingDot from "./orbiting-dot";
@@ -12,18 +13,9 @@ type HeroCanvasProps = {
   canvasBgColor: string;
 };
 
-export default function HeroCanvas({ theme, canvasBgColor }: HeroCanvasProps) {
-  const isDark = theme === "dark";
-
+function SceneContent({ isDark }: { isDark: boolean }) {
   return (
-    <Canvas
-      camera={{ position: [0, 0, 10], fov: 48 }}
-      dpr={[1, 1.6]}
-      gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }}
-      className="h-full w-full"
-    >
-      <color attach="background" args={[canvasBgColor]} />
-
+    <>
       <Environment preset="studio" background={false} environmentIntensity={isDark ? 1.2 : 0.8} />
 
       <ambientLight intensity={isDark ? 0.4 : 0.6} />
@@ -52,7 +44,73 @@ export default function HeroCanvas({ theme, canvasBgColor }: HeroCanvasProps) {
         color={isDark ? "#a0e8ff" : "#ffffff"}
         opacity={isDark ? 0.35 : 0.5}
       />
+    </>
+  );
+}
 
-    </Canvas>
+function LoadingOverlay() {
+  const { progress, active } = useProgress();
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (!active && progress === 100) {
+      const timer = setTimeout(() => setVisible(false), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [active, progress]);
+
+  if (!visible) return null;
+
+  const done = !active && progress === 100;
+
+  return (
+    <div
+      className={`canvas-loader ${done ? "canvas-loader-done" : ""}`}
+    >
+      <div className="canvas-loader-ring">
+        <svg viewBox="0 0 48 48" width="48" height="48">
+          <circle
+            cx="24" cy="24" r="20"
+            fill="none"
+            stroke="var(--glass-border-strong)"
+            strokeWidth="2"
+            opacity="0.3"
+          />
+          <circle
+            cx="24" cy="24" r="20"
+            fill="none"
+            stroke="var(--ink-soft)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeDasharray={`${progress * 1.257} 125.7`}
+            className="canvas-loader-progress"
+          />
+        </svg>
+        <span className="canvas-loader-pct">
+          {Math.round(progress)}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export default function HeroCanvas({ theme, canvasBgColor }: HeroCanvasProps) {
+  const isDark = theme === "dark";
+
+  return (
+    <div className="relative h-full w-full">
+      <Canvas
+        camera={{ position: [0, 0, 10], fov: 48 }}
+        dpr={[1, 1.6]}
+        gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }}
+        className="h-full w-full"
+      >
+        <color attach="background" args={[canvasBgColor]} />
+        <Suspense fallback={null}>
+          <SceneContent isDark={isDark} />
+        </Suspense>
+      </Canvas>
+      <LoadingOverlay />
+    </div>
   );
 }
