@@ -94,7 +94,12 @@ body {
   background:
     radial-gradient(circle at 12% 12%, var(--bg-radial-a) 0%, transparent 45%),
     radial-gradient(circle at 88% 20%, var(--bg-radial-b) 0%, transparent 40%),
-    linear-gradient(160deg, var(--bg-linear-a) 0%, var(--bg-linear-b) 50%, var(--bg-linear-c) 100%);
+    linear-gradient(
+      160deg,
+      var(--bg-linear-a) 0%,
+      var(--bg-linear-b) 50%,
+      var(--bg-linear-c) 100%
+    );
   font-family: var(--font-sans);
   transition:
     color 240ms ease,
@@ -175,7 +180,11 @@ html.theme-changing *::after {
   position: absolute;
   inset: 1px;
   border-radius: 999px;
-  background: linear-gradient(180deg, var(--nav-overlay-a), var(--nav-overlay-b));
+  background: linear-gradient(
+    180deg,
+    var(--nav-overlay-a),
+    var(--nav-overlay-b)
+  );
   pointer-events: none;
 }
 
@@ -206,7 +215,11 @@ html.theme-changing *::after {
   bottom: 6px;
   left: 0;
   border-radius: 999px;
-  background: linear-gradient(180deg, var(--nav-indicator-a), var(--nav-indicator-b));
+  background: linear-gradient(
+    180deg,
+    var(--nav-indicator-a),
+    var(--nav-indicator-b)
+  );
   box-shadow:
     inset 0 1px 0 var(--nav-indicator-inset),
     0 8px 16px var(--nav-indicator-shadow);
@@ -249,7 +262,9 @@ html.theme-changing *::after {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    backdrop-filter 0.5s ease;
   z-index: 10;
 }
 
@@ -269,10 +284,6 @@ html.theme-changing *::after {
 
 .canvas-loader-ring svg {
   transform: rotate(-90deg);
-}
-
-.canvas-loader-progress {
-  transition: stroke-dasharray 0.3s ease;
 }
 
 .canvas-loader-pct {

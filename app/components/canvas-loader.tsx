@@ -1,11 +1,39 @@
 "use client";
 
 import { useProgress } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function CanvasLoader() {
   const { progress, active } = useProgress();
   const [visible, setVisible] = useState(true);
+  const [display, setDisplay] = useState(0);
+  const rafRef = useRef<number>(0);
+  const displayRef = useRef(0);
+
+  const animate = useCallback((target: number) => {
+    cancelAnimationFrame(rafRef.current);
+
+    const step = () => {
+      const current = displayRef.current;
+      const next = current + (target - current) * 0.08;
+
+      if (Math.abs(target - next) < 0.5) {
+        displayRef.current = target;
+        setDisplay(target);
+      } else {
+        displayRef.current = next;
+        setDisplay(next);
+        rafRef.current = requestAnimationFrame(step);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(step);
+  }, []);
+
+  useEffect(() => {
+    animate(progress);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [progress, animate]);
 
   useEffect(() => {
     if (!active && progress === 100) {
@@ -35,12 +63,12 @@ export default function CanvasLoader() {
             stroke="var(--ink-soft)"
             strokeWidth="2"
             strokeLinecap="round"
-            strokeDasharray={`${progress * 1.257} 125.7`}
+            strokeDasharray={`${display * 1.257} 125.7`}
             className="canvas-loader-progress"
           />
         </svg>
         <span className="canvas-loader-pct">
-          {Math.round(progress)}
+          {Math.round(display)}
         </span>
       </div>
     </div>
