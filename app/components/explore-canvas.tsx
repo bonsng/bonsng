@@ -12,6 +12,7 @@ import { projects } from "../data/portfolio";
 
 type ExploreCanvasProps = {
   theme: Theme;
+  canvasBgColor: string;
   onSelectProject: (project: Project) => void;
 };
 
@@ -156,7 +157,7 @@ function Scene({ onSelectProject }: { onSelectProject: (project: Project) => voi
   );
 }
 
-export default function ExploreCanvas({ theme, onSelectProject }: ExploreCanvasProps) {
+export default function ExploreCanvas({ theme, canvasBgColor, onSelectProject }: ExploreCanvasProps) {
   const isDark = theme === "dark";
 
   return (
@@ -166,7 +167,7 @@ export default function ExploreCanvas({ theme, onSelectProject }: ExploreCanvasP
       gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.4 }}
       className="h-full w-full"
     >
-      <color attach="background" args={[isDark ? "#0a0e1a" : "#f9f4ea"]} />
+      <color attach="background" args={[canvasBgColor]} />
 
       {/* HDRI 환경맵 — 메탈릭 반사용 (배경에는 표시하지 않음) */}
       <Environment preset="studio" background={false} environmentIntensity={isDark ? 1.2 : 0.8} />

@@ -11,7 +11,7 @@ import { useSettings } from "./components/settings-context";
 const CLICK_THRESHOLD = 6;
 
 export default function Home() {
-  const { language, theme } = useSettings();
+  const { language, theme, canvasBgColor } = useSettings();
   const router = useRouter();
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -71,7 +71,7 @@ export default function Home() {
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
           >
-            <HeroCanvas theme={theme} />
+            <HeroCanvas theme={theme} canvasBgColor={canvasBgColor} />
             <div className="pointer-events-none absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold tracking-wide text-white backdrop-blur-sm">
               <span>{language === "ko" ? "클릭하여 탐색" : "Click to explore"}</span>
               <span className="inline-block animate-pulse">→</span>

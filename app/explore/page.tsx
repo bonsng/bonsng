@@ -8,7 +8,7 @@ import { useSettings } from "../components/settings-context";
 import type { Project } from "../data/portfolio";
 
 export default function ExplorePage() {
-  const { language, theme } = useSettings();
+  const { language, theme, canvasBgColor } = useSettings();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export default function ExplorePage() {
 
   return (
     <PageShell fullBleed>
-      <ExploreCanvas theme={theme} onSelectProject={openProject} />
+      <ExploreCanvas theme={theme} canvasBgColor={canvasBgColor} onSelectProject={openProject} />
 
       <div className="pointer-events-none absolute left-6 top-6 z-10 md:left-10 md:top-8">
         <p className="text-sm font-semibold tracking-wide text-[color:var(--ink-soft)]">

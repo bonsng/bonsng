@@ -1,10 +1,10 @@
 "use client";
 
-import { ChevronDown, Globe2, Moon, Sun } from "lucide-react";
+import { ChevronDown, Globe2, Moon, Palette, Sun } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { useSettings } from "./settings-context";
+import { CANVAS_BG_OPTIONS, useSettings } from "./settings-context";
 
 const menus = [
   { href: "/", label: "Home" },
@@ -33,7 +33,9 @@ function getDesktopSnapshot() {
 }
 
 export default function SiteNav() {
-  const { language, setLanguage, theme, setTheme } = useSettings();
+  const { language, setLanguage, theme, setTheme, canvasBg, setCanvasBg } = useSettings();
+  const [bgOpen, setBgOpen] = useState(false);
+  const bgRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
@@ -93,6 +95,17 @@ export default function SiteNav() {
     return () => window.removeEventListener("mousemove", onMouseMove);
   }, [isDesktop]);
 
+  useEffect(() => {
+    if (!bgOpen) return;
+    const onClickOutside = (e: MouseEvent) => {
+      if (bgRef.current && !bgRef.current.contains(e.target as Node)) {
+        setBgOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, [bgOpen]);
+
   return (
     <>
       <div className="fixed right-4 top-4 z-[55] md:right-6 md:top-5">
@@ -106,6 +119,42 @@ export default function SiteNav() {
             <Globe2 className="h-3.5 w-3.5" />
             {language === "ko" ? "KO" : "EN"}
           </button>
+          <div ref={bgRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setBgOpen((prev) => !prev)}
+              className="settings-pill inline-flex items-center rounded-full p-2"
+              aria-label={language === "ko" ? "배경색 변경" : "Change background"}
+              title={language === "ko" ? "배경색" : "Background"}
+            >
+              <Palette className="h-3.5 w-3.5" />
+            </button>
+            {bgOpen && (
+              <div className="glass-panel absolute right-0 top-full mt-2 min-w-[140px] rounded-xl p-1.5">
+                {CANVAS_BG_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => {
+                      setCanvasBg(opt.value);
+                      setBgOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+                      canvasBg === opt.value
+                        ? "bg-[color:var(--glass-chip-bg)] text-[color:var(--ink)]"
+                        : "text-[color:var(--ink-soft)] hover:bg-[color:var(--glass-chip-bg)]"
+                    }`}
+                  >
+                    <span
+                      className="inline-block h-3 w-3 shrink-0 rounded-full border border-[color:var(--ink-soft)]/20"
+                      style={{ backgroundColor: opt.light }}
+                    />
+                    {opt.label[language]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button
             type="button"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
