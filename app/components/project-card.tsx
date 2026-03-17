@@ -38,6 +38,17 @@ export default function ProjectCard({ project, preloadImage = false }: ProjectCa
   );
 
   useEffect(() => {
+    if (mounted) {
+      document.documentElement.dataset.modalOpen = "";
+    } else {
+      delete document.documentElement.dataset.modalOpen;
+    }
+    return () => {
+      delete document.documentElement.dataset.modalOpen;
+    };
+  }, [mounted]);
+
+  useEffect(() => {
     if (!mounted) return;
 
     const onKeyDown = (event: KeyboardEvent) => {

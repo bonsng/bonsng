@@ -3,7 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { RefObject } from "react";
-import type { DetailItem, DetailSection, DetailSubSection, Project } from "../data/portfolio";
+import type {
+  DetailItem,
+  DetailSection,
+  DetailSubSection,
+  Project,
+} from "../data/portfolio";
 import type { Language } from "./settings-context";
 
 type ProjectModalProps = {
@@ -28,15 +33,27 @@ export default function ProjectModal({
   return (
     <div
       ref={backdropRef}
-      className={`fixed inset-0 z-[60] flex items-center justify-center p-4 backdrop-blur-sm transition-[background-color,opacity] duration-300 ${visible ? "bg-[#11131a]/55 opacity-100" : "bg-[#11131a]/0 opacity-0"}`}
+      className={`fixed inset-0 z-[60] flex items-end md:items-center md:justify-center md:p-4 backdrop-blur-sm transition-[background-color,opacity] duration-300 ${visible ? "bg-[#11131a]/55 opacity-100" : "bg-[#11131a]/0 opacity-0"}`}
       onClick={onClose}
       onTransitionEnd={onTransitionEnd}
     >
       <article
-        className={`glass-panel max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl text-[color:var(--ink)] transition-[transform,opacity] duration-300 ${visible ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+        className={`glass-panel modal-sheet w-full max-h-[80vh] md:max-h-[90vh] md:max-w-4xl overflow-y-auto rounded-t-3xl md:rounded-3xl text-[color:var(--ink)] ${visible ? "translate-y-0 md:scale-100 opacity-100" : "translate-y-full md:translate-y-0 md:scale-95 opacity-0"}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative aspect-video overflow-hidden rounded-t-3xl">
+        {/* Mobile handle bar + close */}
+        <div className="sticky top-0 z-10 flex items-center justify-between px-4 pt-3 pb-2 md:hidden">
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute right-3 top-2.5 flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--glass-chip-bg)] text-[color:var(--ink-soft)] text-lg transition-colors active:bg-[color:var(--glass-chip-hover)]"
+            aria-label={language === "ko" ? "닫기" : "Close"}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="relative aspect-video overflow-hidden md:rounded-t-3xl">
           <Image
             src={project.image}
             alt={`${project.title} preview`}
@@ -46,7 +63,7 @@ export default function ProjectModal({
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
+            className="absolute right-3 top-3 hidden md:flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
             aria-label={language === "ko" ? "닫기" : "Close"}
           >
             ✕
@@ -101,7 +118,11 @@ export default function ProjectModal({
           </h4>
           <div className="mt-3 space-y-5">
             {project.details.map((section) => (
-              <SectionBlock key={section.title[language]} section={section} language={language} />
+              <SectionBlock
+                key={section.title[language]}
+                section={section}
+                language={language}
+              />
             ))}
           </div>
         </div>
@@ -123,7 +144,13 @@ function BlogLink({ href }: { href: string }) {
   );
 }
 
-function ItemList({ items, language }: { items: DetailItem[]; language: Language }) {
+function ItemList({
+  items,
+  language,
+}: {
+  items: DetailItem[];
+  language: Language;
+}) {
   return (
     <ul className="mt-1 space-y-1 text-sm leading-relaxed text-[color:var(--ink-soft)]">
       {items.map((item) => (
@@ -139,7 +166,13 @@ function ItemList({ items, language }: { items: DetailItem[]; language: Language
   );
 }
 
-function SubSectionBlock({ sub, language }: { sub: DetailSubSection; language: Language }) {
+function SubSectionBlock({
+  sub,
+  language,
+}: {
+  sub: DetailSubSection;
+  language: Language;
+}) {
   return (
     <div className="pl-4">
       <p className="text-sm font-semibold text-[color:var(--ink)]">
@@ -155,7 +188,13 @@ function SubSectionBlock({ sub, language }: { sub: DetailSubSection; language: L
   );
 }
 
-function SectionBlock({ section, language }: { section: DetailSection; language: Language }) {
+function SectionBlock({
+  section,
+  language,
+}: {
+  section: DetailSection;
+  language: Language;
+}) {
   return (
     <div>
       <h5 className="text-base font-bold text-[color:var(--ink)]">
@@ -175,7 +214,11 @@ function SectionBlock({ section, language }: { section: DetailSection; language:
       {section.subSections && section.subSections.length > 0 && (
         <div className="mt-1.5 space-y-2">
           {section.subSections.map((sub) => (
-            <SubSectionBlock key={sub.title[language]} sub={sub} language={language} />
+            <SubSectionBlock
+              key={sub.title[language]}
+              sub={sub}
+              language={language}
+            />
           ))}
         </div>
       )}
