@@ -15,7 +15,10 @@ Personal portfolio website for Bonseung Koo (Frontend Engineer). Built with Next
 - `npm run dev` — Start dev server
 - `npm run build` — Production build
 - `npm run lint` — ESLint (flat config, core-web-vitals + typescript rules)
-- No test framework is configured
+- `npm test` — Vitest 테스트 실행 (1회)
+- `npm run test:watch` — Vitest watch 모드
+
+테스트 가이드: [docs/testing.md](docs/testing.md)
 
 CI runs lint + build on push to main and on PRs (`.github/workflows/ci.yml`).
 
