@@ -105,6 +105,7 @@ function ProjectNode({
         center
         occlude
         distanceFactor={10}
+        zIndexRange={[1, 50]}
         style={{ pointerEvents: "none", userSelect: "none" }}
       >
         <div className="whitespace-nowrap rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
@@ -116,6 +117,7 @@ function ProjectNode({
         center
         occlude
         distanceFactor={10}
+        zIndexRange={[1, 50]}
         style={{ pointerEvents: "none", userSelect: "none" }}
       >
         <div className="whitespace-nowrap text-[10px] text-[color:var(--ink-soft)]">
