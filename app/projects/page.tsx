@@ -1,12 +1,12 @@
-"use client";
-
+import { cookies } from "next/headers";
 import PageShell from "../components/page-shell";
 import ProjectCard from "../components/project-card";
-import { useSettings } from "../components/settings-context";
+import type { Language } from "../components/settings-context";
 import { projects } from "../data/portfolio";
 
-export default function ProjectsPage() {
-  const { language } = useSettings();
+export default async function ProjectsPage() {
+  const cookieStore = await cookies();
+  const language: Language = cookieStore.get("bonsng-language")?.value === "en" ? "en" : "ko";
 
   return (
     <PageShell>

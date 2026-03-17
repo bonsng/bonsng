@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 export type Theme = "light" | "dark";
@@ -36,6 +37,7 @@ type SettingsProviderProps = {
 };
 
 export function SettingsProvider({ children, initialTheme, initialLanguage }: SettingsProviderProps) {
+  const router = useRouter();
   const [theme, setThemeState] = useState<Theme>(initialTheme);
   const [language, setLanguageState] = useState<Language>(initialLanguage);
   const [canvasBg, setCanvasBgState] = useState<CanvasBg>(() => {
@@ -54,8 +56,11 @@ export function SettingsProvider({ children, initialTheme, initialLanguage }: Se
   }, []);
 
   const setLanguage = useCallback((nextLanguage: Language) => {
+    document.cookie = `${LANGUAGE_KEY}=${nextLanguage}; path=/; max-age=31536000; samesite=lax`;
+    localStorage.setItem(LANGUAGE_KEY, nextLanguage);
     setLanguageState(nextLanguage);
-  }, []);
+    router.refresh();
+  }, [router]);
 
   const setCanvasBg = useCallback((nextBg: CanvasBg) => {
     setCanvasBgState(nextBg);
@@ -73,11 +78,6 @@ export function SettingsProvider({ children, initialTheme, initialLanguage }: Se
     document.cookie = `${THEME_KEY}=${theme}; path=/; max-age=31536000; samesite=lax`;
   }, [theme]);
 
-  useEffect(() => {
-    document.documentElement.lang = language;
-    localStorage.setItem(LANGUAGE_KEY, language);
-    document.cookie = `${LANGUAGE_KEY}=${language}; path=/; max-age=31536000; samesite=lax`;
-  }, [language]);
 
   const value = useMemo(
     () => ({
